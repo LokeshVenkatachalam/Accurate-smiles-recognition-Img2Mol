@@ -1,4 +1,6 @@
 from cddd.inference import InferenceModel
+import numpy as np
+from cddd.inference import InferenceModel
 import fastapi
 from pydantic import BaseModel
 from typing import List
