@@ -11,6 +11,7 @@ import torch.nn as nn
 from tqdm import tqdm
 from torchvision import transforms
 from matplotlib import pyplot as plt
+# from cddd.inference import InferenceModel
 from PIL import Image, ImageOps, ImageEnhance
 from pytorch_lightning import LightningModule as LM
 
@@ -142,8 +143,14 @@ if st.button("Predict"):
         batch_x = batch_x.to(device)
         predictions = model(batch_x)
         pred_np = predictions.cpu().detach().numpy()
-        print(pred_np)
-        # req = json.dumps({"cddd": pred_np.tolist()})
-        # r = requests.post("http://ec2-18-157-240-87.eu-central-1.compute.amazonaws.com:8892/cddd_to_smiles/",data=req, headers= {'content-type': 'application/json'}, verify=False)
-        # # print(r.content)
-        # print(json.loads(r.content.decode("utf-8")))
+        # data = {'cddd': pred_np.to_list()}
+        # r = requests.post("http://localhost:8000/predict", json=data)
+        # print(r.content)
+        # embs = pred_np.tolist()
+        # # infer_model = InferenceModel(model_dir="/home/reshyurem/cddd/default_model/")
+        for emb in pred_np:
+            # req = json.dumps({"cddd": pred_np.tolist()})
+            # data = {'cddd': emb.tolist(), 'seq':"Hi"}
+            r = requests.post("http://localhost:8000/predict", data=json.dumps({'cddd': emb.tolist(), 'seq': 'Konichiwa MFs'}))
+            st.write(json.loads(r.text)['seq'])
+            # print(json.loads(r.content.decode("utf-8")))
