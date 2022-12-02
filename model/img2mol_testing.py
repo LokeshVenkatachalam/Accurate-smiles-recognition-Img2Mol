@@ -9,7 +9,7 @@ from tqdm import tqdm
 from torchvision import transforms
 from matplotlib import pyplot as plt
 from PIL import Image, ImageOps, ImageEnhance
-from pytorch_lightning import LightningModel as LM
+from pytorch_lightning import LightningModule as LM
 
 # Options
 
