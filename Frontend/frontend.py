@@ -152,5 +152,6 @@ if st.button("Predict"):
             # req = json.dumps({"cddd": pred_np.tolist()})
             # data = {'cddd': emb.tolist(), 'seq':"Hi"}
             r = requests.post("http://localhost:8000/predict", data=json.dumps({'cddd': emb.tolist(), 'seq': 'Konichiwa MFs'}))
+            st.image(file_list[i])
             st.write(json.loads(r.text)['seq'])
             # print(json.loads(r.content.decode("utf-8")))
